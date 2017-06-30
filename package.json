@@ -1,0 +1,19 @@
+{
+  "name": "soundcloudie",
+  "version": "1.0.0",
+  "description": "Soundcloud audio API. Resolve track/playlist URL and get data from audio stream with useful methods. It ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run tests"
+  },
+  "keywords": [
+    "soundcloud",
+    "audio",
+    "player",
+    "html5",
+    "audio",
+    "music"
+  ],
+  "author": "Alexey Makhyanov",
+  "license": "MIT"
+}
