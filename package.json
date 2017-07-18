@@ -15,5 +15,6 @@
     "music"
   ],
   "author": "Alexey Makhyanov",
+  "bugs": "https://github.com/oboshto/soundcloudie/issues",
   "license": "MIT"
 }
