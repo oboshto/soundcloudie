@@ -1,24 +1,29 @@
-class Player {
+class Soundcloudie {
   constructor(clientId) {
     this.clientId = clientId;
     this.audio = document.createElement('audio');
     this.playing = false;
+    this.playlist = [];
+    this.unshuffledPlaylist = [];
     this.events = {};
     this.shuffled = false;
     this.RESOLVE_URL = 'http://api.soundcloud.com/resolve?url=';
   }
 
   setPlaylist(playlist) {
-    this.playlist = playlist;
-    this.unshuffledPlaylist = playlist.slice();
+    if (!playlist.length) {
+      this.playlist.push(playlist);
+    } else {
+      this.playlist = playlist;
+    }
+    this.unshuffledPlaylist = this.playlist.slice();
     this.currentIndex = 0;
     this.currentTrack = this.playlist[this.currentIndex];
-    // this.audio.src = `${this.currentTrack.stream_url}?client_id=${this.clientId}`;
   }
 
   _fetch(url) {
     return fetch(`${this.RESOLVE_URL}${url}&client_id=${this.clientId}`, {mode: 'cors'})
-      .then(function(response) {
+      .then((response) => {
         return response.json();
       });
   }
@@ -31,22 +36,21 @@ class Player {
             reject(response.errors);
             return;
           }
-
           if (response.kind === 'playlist') {
             this.setPlaylist(response.tracks);
           }
-
-          // TODO: response.kind === track
-
+          if (response.kind === 'track') {
+            this.setPlaylist(response);
+          }
           resolve();
         })
-        .catch(function(error) {
+        .catch((error) => {
           reject(error);
         });
     });
   }
 
-  static _shuffleArray(array) {
+  _shuffleArray(array) {
     let counter = array.length;
     while (counter > 0) {
       let index = Math.floor(Math.random() * counter);
@@ -67,7 +71,7 @@ class Player {
       this.shuffled = false;
     } else {
       // else let's shuffle playlist and grab new currentIndex of currentTrack
-      this.playlist = Player._shuffleArray(this.playlist);
+      this.playlist = this._shuffleArray(this.playlist);
       this.currentIndex = this.playlist.indexOf(this.currentTrack);
       if (this.currentIndex !== 0) {
         let temp = this.playlist[0];
@@ -118,7 +122,6 @@ class Player {
   }
 
   preloadNext() {
-    // let nextSrc = document.createElement('audio');
     if (this.playing) {
       this.currentIndex++;
       if (this.currentIndex >= this.playlist.length) {
@@ -136,32 +139,26 @@ class Player {
   }
 
   stop() {
-    this.audio.pause();
-    this.audio.seek(0);
+    this.pause();
+    this.seek(0);
   }
 
   previous() {
-    return new Promise((resolve) => {
-      this.currentIndex--;
-      if (this.currentIndex < 0) {
-        this.currentIndex = this.playlist.length - 1;
-      }
-      this.currentTrack = this.playlist[this.currentIndex];
-      // this.audio.src = `${this.currentTrack.stream_url}?client_id=${this.clientId}`;
-      resolve(this.currentTrack.stream_url);
-    });
+    this.currentIndex--;
+    if (this.currentIndex < 0) {
+      this.currentIndex = this.playlist.length - 1;
+    }
+    this.currentTrack = this.playlist[this.currentIndex];
+    this.play();
   }
 
   next() {
-    return new Promise((resolve) => {
-      this.currentIndex++;
-      if (this.currentIndex >= this.playlist.length) {
-        this.currentIndex = 0;
-      }
-      this.currentTrack = this.playlist[this.currentIndex];
-      // this.audio.src = `${this.currentTrack.stream_url}?client_id=${this.clientId}`;
-      resolve(this.currentTrack.stream_url);
-    });
+    this.currentIndex++;
+    if (this.currentIndex >= this.playlist.length) {
+      this.currentIndex = 0;
+    }
+    this.currentTrack = this.playlist[this.currentIndex];
+    this.play();
   }
 
   on(e, fn) {
@@ -191,5 +188,3 @@ class Player {
     this.audio.volume = value;
   }
 }
-
-export default Player;
