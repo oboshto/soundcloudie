@@ -7,7 +7,13 @@
     "build": "babel src -d dist --presets=es2015",
     "watch": "babel src --watch -d dist --presets=es2015"
   },
-  "keywords": ["soundcloud", "audio", "player", "html5", "music"],
+  "keywords": [
+    "soundcloud",
+    "audio",
+    "player",
+    "html5",
+    "music"
+  ],
   "author": "Alexey Makhyanov",
   "repository": {
     "type": "git",

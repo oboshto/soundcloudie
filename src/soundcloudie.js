@@ -188,3 +188,11 @@ class Soundcloudie {
     this.audio.volume = value;
   }
 }
+
+if (typeof define === 'function' && define.amd) {
+  define(Soundcloudie);
+} else if (typeof module !== 'undefined' && module.exports) {
+  module.exports = Soundcloudie;
+} else {
+  window.Soundcloudie = Soundcloudie;
+}
