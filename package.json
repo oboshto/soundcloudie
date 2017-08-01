@@ -1,6 +1,6 @@
 {
   "name": "soundcloudie",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Soundcloud audio API. Resolve track/playlist URL and get data from audio stream with useful methods.",
   "main": "src/soundcloudie.js",
   "scripts": {
