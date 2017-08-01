@@ -1,6 +1,6 @@
 {
   "name": "soundcloudie",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Soundcloud audio API. Resolve track/playlist URL and get data from audio stream with useful methods.",
   "main": "src/soundcloudie.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "author": "Alexey Makhyanov",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oboshto/soundcloudie"
+    "url": "git://github.com/oboshto/soundcloudie.git"
   },
   "bugs": "https://github.com/oboshto/soundcloudie/issues",
   "license": "MIT",
